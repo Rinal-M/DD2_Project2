@@ -17,105 +17,215 @@ struct cell {
 	bool visited, obstacle, via, source, destination;
 };
 
-bool calculate(cell*** &arr, vector<cell> &bfsQueue, int num)
+bool calculate(cell*** &arr, vector<cell> &bfsQueue, int num, int destZ, int destX, int destY)
 {
 	int x = bfsQueue[num].xPos, y = bfsQueue[num].yPos, z = bfsQueue[num].layerNum;
 	if (z % 2 == 0) //check all 4 conditions of even layers
 	{
-		if (((x + 1) >= 0 && (x + 1) <= 999) && arr[z][x + 1][y].visited == 0 && arr[z][x + 1][y].obstacle == 0)
+		if (destY > y) // if y is less than destination
 		{
-			arr[z][x + 1][y].visited = 1;
-			arr[z][x + 1][y].bfsNum = bfsQueue[num].bfsNum + oppositePath;
-			bfsQueue.push_back(arr[z][x + 1][y]);
-			if (arr[z][x + 1][y].destination == 1)
-				return true;
-			//if via is found
-			//push it back when the layer is known
+			if (((y + 1) >= 0 && (y + 1) <= 999) && arr[z][x][y + 1].visited == 0 && arr[z][x][y + 1].obstacle == 0 && arr[destZ][x][y + 1].obstacle == 0)
+			{
+				arr[z][x][y + 1].visited = 1;
+				arr[z][x][y + 1].obstacle = 1;
+				arr[z][x][y + 1].bfsNum = bfsQueue[num].bfsNum + 1;
+				bfsQueue.push_back(arr[z][x][y + 1]);
+			}
+			else //via
+			{
+				if (abs(z - destZ) % 2 == 1) // example 2 & 3
+				{
+					arr[z][x][y].via = 1;
+					arr[destZ][x][y].via = 1;
+					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+					bfsQueue.push_back(arr[destZ][x][y]);
+				}
+				else // example 2 & 4
+				{
+					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
+					arr[z][x][y].via = 1;
+					int m = max(destZ, z);
+					if (arr[m + 1][x][y].obstacle == 0)
+					{
+						arr[m + 1][x][y].via = 1;
+						arr[m + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[m + 1][x][y]);
+					}
+				}
+			}
 		}
-		if (((x - 1) >= 0 && (x - 1) <= 999) && arr[z][x - 1][y].visited == 0 && arr[z][x - 1][y].obstacle == 0)
+		else if (destY < y)
 		{
-			arr[z][x - 1][y].visited = 1;
-			arr[z][x - 1][y].bfsNum = bfsQueue[num].bfsNum + oppositePath;
-			bfsQueue.push_back(arr[z][x - 1][y]);
-			if (arr[z][x - 1][y].destination == 1)
-				return true;
-			//if via is found
-			//push it back when the layer is known
+			if (((y - 1) >= 0 && (y - 1) <= 999) && arr[z][x][y - 1].visited == 0 && arr[z][x][y - 1].obstacle == 0 && arr[destZ][x][y - 1].obstacle == 0)
+			{
+				arr[z][x][y - 1].visited = 1;
+				arr[z][x][y - 1].obstacle = 1;
+				arr[z][x][y - 1].bfsNum = bfsQueue[num].bfsNum + 1;
+				bfsQueue.push_back(arr[z][x][y - 1]);
+			}
+			else //via
+			{
+				if (abs(z - destZ) % 2 == 1) // example 2 & 3
+				{
+					arr[z][x][y].via = 1;
+					arr[destZ][x][y].via = 1;
+					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+					bfsQueue.push_back(arr[destZ][x][y]);
+				}
+				else // example 2 & 4
+				{
+					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
+					arr[z][x][y].via = 1;
+					int m = max(destZ, z);
+					if (arr[m + 1][x][y].obstacle == 0)
+					{
+						arr[m + 1][x][y].via = 1;
+						arr[m + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[m + 1][x][y]);
+					}
+				}
+			}
 		}
-		if (((y + 1) >= 0 && (y + 1) <= 999) && arr[z][x][y + 1].visited == 0 && arr[z][x][y + 1].obstacle == 0)
+		else //destY == y
 		{
-			arr[z][x][y + 1].visited = 1;
-			arr[z][x][y + 1].bfsNum = bfsQueue[num].bfsNum + 1;
-			bfsQueue.push_back(arr[z][x][y + 1]);
-			if (arr[z][x][y + 1].destination == 1)
+			if (destX == x && destZ == z)
 				return true;
-			//if via is found
-			//push it back when the layer is known
-		}
-		if (((y - 1) >= 0 && (y - 1) <= 999) && arr[z][x][y - 1].visited == 0 && arr[z][x][y - 1].obstacle == 0)
-		{
-			arr[z][x][y - 1].visited = 1;
-			arr[z][x][y - 1].bfsNum = bfsQueue[num].bfsNum + 1;
-			bfsQueue.push_back(arr[z][x][y - 1]);
-			if (arr[z][x][y - 1].destination == 1)
-				return true;
-			//if via is found
-			//push it back when the layer is known
+			else
+			{
+				if (abs(z - destZ) % 2 == 1) // example 2 & 3
+				{
+					arr[z][x][y].via = 1;
+					arr[destZ][x][y].via = 1;
+					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+					bfsQueue.push_back(arr[destZ][x][y]);
+				}
+				else // example 2 & 4
+				{
+					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
+					arr[z][x][y].via = 1;
+					int m = max(destZ, z);
+					if (arr[m + 1][x][y].obstacle == 0)
+					{
+						arr[m + 1][x][y].via = 1;
+						arr[m + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[m + 1][x][y]);
+					}
+				}
+			}
 		}
 	}
-	else
+
+
+
+
+	else //z % 2 != 0
 	{
-		if (((x + 1) >= 0 && (x + 1) <= 999) && arr[z][x + 1][y].visited == 0 && arr[z][x + 1][y].obstacle == 0)
+		if (destX > x) // if X is less than destination
 		{
-			arr[z][x + 1][y].visited = 1;
-			arr[z][x + 1][y].bfsNum = bfsQueue[num].bfsNum + 1;
-			bfsQueue.push_back(arr[z][x + 1][y]);
-			if (arr[z][x + 1][y].destination == 1)
-				return true;
-			//if via is found
-			//push it back when the layer is known
+			if (((x + 1) >= 0 && (x + 1) <= 999) && arr[z][x + 1][y].visited == 0 && arr[z][x + 1][y].obstacle == 0 && arr[destZ][x + 1][y].obstacle == 0)
+			{
+				arr[z][x + 1][y].visited = 1;
+				arr[z][x + 1][y].obstacle = 1;
+				arr[z][x + 1][y].bfsNum = bfsQueue[num].bfsNum + 1;
+				bfsQueue.push_back(arr[z][x + 1][y]);
+			}
+			else //via
+			{
+				if (abs(z - destZ) % 2 == 1) // example 2 & 3
+				{
+					arr[z][x][y].via = 1;
+					arr[destZ][x][y].via = 1;
+					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+					bfsQueue.push_back(arr[destZ][x][y]);
+				}
+				else // example 2 & 4
+				{
+					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
+					arr[z][x][y].via = 1;
+					int m = max(destZ, z);
+					if (arr[m + 1][x][y].obstacle == 0)
+					{
+						arr[m + 1][x][y].via = 1;
+						arr[m + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[m + 1][x][y]);
+					}
+				}
+			}
+
 		}
-		if (((x - 1) >= 0 && (x - 1) <= 999) && arr[z][x - 1][y].visited == 0 && arr[z][x - 1][y].obstacle == 0)
+		else if (destX < x) // if X is greater than destination
 		{
-			arr[z][x - 1][y].visited = 1;
-			arr[z][x - 1][y].bfsNum = bfsQueue[num].bfsNum + 1;
-			bfsQueue.push_back(arr[z][x - 1][y]);
-			if (arr[z][x - 1][y].destination == 1)
-				return true;
-			//if via is found
-			//push it back when the layer is known
+			if (((x - 1) >= 0 && (x - 1) <= 999) && arr[z][x - 1][y].visited == 0 && arr[z][x - 1][y].obstacle == 0 && arr[destZ][x - 1][y].obstacle == 0)
+			{
+				arr[z][x - 1][y].visited = 1;
+				arr[z][x - 1][y].obstacle = 1;
+				arr[z][x - 1][y].bfsNum = bfsQueue[num].bfsNum + 1;
+				bfsQueue.push_back(arr[z][x - 1][y]);
+			}
+			else //via
+			{
+				if (abs(z - destZ) % 2 == 1) // example 2 & 3
+				{
+					arr[z][x][y].via = 1;
+					arr[destZ][x][y].via = 1;
+					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+					bfsQueue.push_back(arr[destZ][x][y]);
+				}
+				else // example 2 & 4
+				{
+					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
+					arr[z][x][y].via = 1;
+					int m = max(destZ, z);
+					if (arr[m + 1][x][y].obstacle == 0)
+					{
+						arr[m + 1][x][y].via = 1;
+						arr[m + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[m + 1][x][y]);
+					}
+				}
+			}
 		}
-		if (((y + 1) >= 0 && (y + 1) <= 999) && arr[z][x][y + 1].visited == 0 && arr[z][x][y + 1].obstacle == 0)
+		else //destX == x
 		{
-			arr[z][x][y + 1].visited = 1;
-			arr[z][x][y + 1].bfsNum = bfsQueue[num].bfsNum + oppositePath;
-			bfsQueue.push_back(arr[z][x][y + 1]);
-			if (arr[z][x][y + 1].destination == 1)
+			if (destY == y && destZ == z)
 				return true;
-			//if via is found
-			//push it back when the layer is known
+			else
+			{
+				if (abs(z - destZ) % 2 == 1) // example 2 & 3
+				{
+					arr[z][x][y].via = 1;
+					arr[destZ][x][y].via = 1;
+					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+					bfsQueue.push_back(arr[destZ][x][y]);
+				}
+				else // example 2 & 4
+				{
+					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
+					arr[z][x][y].via = 1;
+					int m = max(destZ, z);
+					if (arr[m - 1][x][y].obstacle == 0)
+					{
+						arr[m - 1][x][y].via = 1;
+						arr[m - 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[m - 1][x][y]);
+					}
+				}
+			}
 		}
-		if (((y - 1) >= 0 && (y - 1) <= 999) && arr[z][x][y - 1].visited == 0 && arr[z][x][y - 1].obstacle == 0 )
-		{
-			arr[z][x][y - 1].visited = 1;
-			arr[z][x][y - 1].bfsNum = bfsQueue[num].bfsNum + oppositePath;
-			bfsQueue.push_back(arr[z][x][y - 1]);
-			if (arr[z][x][y - 1].destination == 1)
-				return true;
-			//if via is found
-			//push it back when the layer is known
-		}
+
 	}
+
+
 	return false;
 }
 
-void bfs(cell*** &arr, vector<cell> &bfsQueue)
+void bfs(cell*** &arr, vector<cell> &bfsQueue, int destZ, int destX, int destY)
 {
 	int count = 1;
-	bool flag = calculate(arr, bfsQueue, 0);
+	bool flag = calculate(arr, bfsQueue, 0, destZ, destX, destY);
 	if (flag == false)
 	{
-		while (calculate(arr, bfsQueue, count) != true)
+		while (calculate(arr, bfsQueue, count, destZ, destX, destY) != true)
 		{
 			count++;
 		}
@@ -125,7 +235,7 @@ void bfs(cell*** &arr, vector<cell> &bfsQueue)
 	cout << "Size of Queue " << bfsQueue.size() << endl;
 	for (int i = 0; i < bfsQueue.size(); i++)
 	{
-		cout << bfsQueue[i].layerNum << " " << bfsQueue[i].xPos << " " << bfsQueue[i].yPos << endl;
+		cout << bfsQueue[i].layerNum << " " << bfsQueue[i].xPos << " " << bfsQueue[i].yPos << " " << bfsQueue[i].bfsNum << endl;
 	}
 
 }
@@ -157,14 +267,15 @@ int main()
 	infile.open("file.txt");
 	int layer_count;
 	string s;
-	vector<cell> bfsQueue;
+	vector<cell> bfsQueue, destVec;
 	cout << "Input number of layers:";
 	cin >> layer_count;
+	layer_count++;
 	cell*** arr = new cell * *[layer_count];
 
 	for (int i = 0; i < layer_count; i++)
 	{
-		arr[i] = new cell * [width];
+		arr[i] = new cell *[width];
 		for (int j = 0; j < width; j++)
 			arr[i][j] = new cell[height];
 	}
@@ -192,6 +303,7 @@ int main()
 		getline(infile, s);
 		counter = 0;
 		bfsQueue.empty();
+		destVec.empty();
 		//net1 (1, 10, 20) (2, 30, 50) (1, 5, 100)
 		for (int x = 0; x < s.length(); x++)
 		{
@@ -212,6 +324,8 @@ int main()
 				arr[tempZ][tempX][tempY].yPos = tempY;
 				arr[tempZ][tempX][tempY].source = 1;
 				arr[tempZ][tempX][tempY].bfsNum = 1;
+				arr[tempZ][tempX][tempY].visited = 1;
+				arr[tempZ][tempX][tempY].obstacle = 1;
 				bfsQueue.push_back(arr[tempZ][tempX][tempY]);
 				counter++;
 			}
@@ -231,13 +345,16 @@ int main()
 				arr[tempZ][tempX][tempY].xPos = tempX;
 				arr[tempZ][tempX][tempY].yPos = tempY;
 				arr[tempZ][tempX][tempY].destination = 1;
-
+				destVec.push_back(arr[tempZ][tempX][tempY]);
 				counter++;
 			}
 			else
 				continue;
 		}
-		bfs(arr, bfsQueue);
+		for (int i = 0; i < destVec.size(); i++) {
+			bfs(arr, bfsQueue, destVec[i].layerNum, destVec[i].xPos, destVec[i].yPos);
+		}
+
 
 	}
 
@@ -248,7 +365,7 @@ int main()
 	//cout << arr[1][10][20].source << " " << arr[2][30][50].destination << " " << arr[1][5][100].destination << endl;
 	//cout << arr[2][100][200].source << " " << arr[1][300][50].destination << " " << endl;
 	//cout << arr[1][100][50].source << " " << arr[2][300][150].destination
-	//	<< " " << arr[2][50][50].destination << " " << arr[1][2][2].destination << endl;
+	// << " " << arr[2][50][50].destination << " " << arr[1][2][2].destination << endl;
 
 	// deallocate memory
 	for (int i = 0; i < layer_count; i++)
