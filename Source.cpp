@@ -5,8 +5,8 @@
 #include<queue>
 #include<sstream>
 
-#define width 1000
-#define height 1000
+#define width 8
+#define height 8
 #define viaCost 10
 #define oppositePath 10
 
@@ -17,7 +17,7 @@ struct cell {
 	bool visited, obstacle, via, source, destination;
 };
 
-bool calculate(cell*** &arr, vector<cell> &bfsQueue, int num, int destZ, int destX, int destY)
+bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int destX, int destY)
 {
 	int x = bfsQueue[num].xPos, y = bfsQueue[num].yPos, z = bfsQueue[num].layerNum;
 	if (z % 2 == 0) //check all 4 conditions of even layers
@@ -40,11 +40,11 @@ bool calculate(cell*** &arr, vector<cell> &bfsQueue, int num, int destZ, int des
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 					bfsQueue.push_back(arr[destZ][x][y]);
 				}
-				else // example 2 & 4
+				else if(abs(z - destZ) % 2 == 0) // example 2 & 4
 				{
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
 					arr[z][x][y].via = 1;
-					int m = max(destZ, z);
+					int m = min(destZ, z);
 					if (arr[m + 1][x][y].obstacle == 0)
 					{
 						arr[m + 1][x][y].via = 1;
@@ -72,16 +72,20 @@ bool calculate(cell*** &arr, vector<cell> &bfsQueue, int num, int destZ, int des
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 					bfsQueue.push_back(arr[destZ][x][y]);
 				}
-				else // example 2 & 4
+				else if (abs(z - destZ) % 2 == 0)// example 2 & 4
 				{
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
 					arr[z][x][y].via = 1;
-					int m = max(destZ, z);
+					int m = min(destZ, z);
 					if (arr[m + 1][x][y].obstacle == 0)
 					{
 						arr[m + 1][x][y].via = 1;
 						arr[m + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 						bfsQueue.push_back(arr[m + 1][x][y]);
+					}
+					else
+					{
+						cout << "Error!!!!" << endl;
 					}
 				}
 			}
@@ -99,11 +103,11 @@ bool calculate(cell*** &arr, vector<cell> &bfsQueue, int num, int destZ, int des
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 					bfsQueue.push_back(arr[destZ][x][y]);
 				}
-				else // example 2 & 4
+				else if (abs(z - destZ) % 2 == 0)// example 2 & 4
 				{
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
 					arr[z][x][y].via = 1;
-					int m = max(destZ, z);
+					int m = min(destZ, z);
 					if (arr[m + 1][x][y].obstacle == 0)
 					{
 						arr[m + 1][x][y].via = 1;
@@ -138,11 +142,11 @@ bool calculate(cell*** &arr, vector<cell> &bfsQueue, int num, int destZ, int des
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 					bfsQueue.push_back(arr[destZ][x][y]);
 				}
-				else // example 2 & 4
+				else if (abs(z - destZ) % 2 == 0)// example 2 & 4
 				{
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
 					arr[z][x][y].via = 1;
-					int m = max(destZ, z);
+					int m = min(destZ, z);
 					if (arr[m + 1][x][y].obstacle == 0)
 					{
 						arr[m + 1][x][y].via = 1;
@@ -171,11 +175,11 @@ bool calculate(cell*** &arr, vector<cell> &bfsQueue, int num, int destZ, int des
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 					bfsQueue.push_back(arr[destZ][x][y]);
 				}
-				else // example 2 & 4
+				else if (abs(z - destZ) % 2 == 0)// example 2 & 4
 				{
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
 					arr[z][x][y].via = 1;
-					int m = max(destZ, z);
+					int m = min(destZ, z);
 					if (arr[m + 1][x][y].obstacle == 0)
 					{
 						arr[m + 1][x][y].via = 1;
@@ -198,16 +202,16 @@ bool calculate(cell*** &arr, vector<cell> &bfsQueue, int num, int destZ, int des
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 					bfsQueue.push_back(arr[destZ][x][y]);
 				}
-				else // example 2 & 4
+				else if (abs(z - destZ) % 2 == 0)// example 2 & 4
 				{
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
 					arr[z][x][y].via = 1;
-					int m = max(destZ, z);
-					if (arr[m - 1][x][y].obstacle == 0)
+					int m = min(destZ, z);
+					if (arr[m + 1][x][y].obstacle == 0)
 					{
-						arr[m - 1][x][y].via = 1;
-						arr[m - 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
-						bfsQueue.push_back(arr[m - 1][x][y]);
+						arr[m + 1][x][y].via = 1;
+						arr[m + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[m + 1][x][y]);
 					}
 				}
 			}
@@ -219,7 +223,7 @@ bool calculate(cell*** &arr, vector<cell> &bfsQueue, int num, int destZ, int des
 	return false;
 }
 
-void bfs(cell*** &arr, vector<cell> &bfsQueue, int destZ, int destX, int destY)
+void bfs(cell***& arr, vector<cell>& bfsQueue, int destZ, int destX, int destY)
 {
 	int count = 1;
 	bool flag = calculate(arr, bfsQueue, 0, destZ, destX, destY);
@@ -261,13 +265,13 @@ vector<int> parser(string str, cell*** arr)
 
 int main()
 {
-	int counter = 0;
+	int counter = 0, netCount = 1;
 	string subString;
 	ifstream infile;
 	infile.open("file.txt");
 	int layer_count;
 	string s;
-	vector<cell> bfsQueue, destVec;
+	vector<cell> bfsQueue, destVec, outCopy;
 	cout << "Input number of layers:";
 	cin >> layer_count;
 	layer_count++;
@@ -275,7 +279,7 @@ int main()
 
 	for (int i = 0; i < layer_count; i++)
 	{
-		arr[i] = new cell *[width];
+		arr[i] = new cell * [width];
 		for (int j = 0; j < width; j++)
 			arr[i][j] = new cell[height];
 	}
@@ -302,8 +306,9 @@ int main()
 	{
 		getline(infile, s);
 		counter = 0;
-		bfsQueue.empty();
-		destVec.empty();
+		bfsQueue.clear();
+		destVec.clear();
+		outCopy.clear();
 		//net1 (1, 10, 20) (2, 30, 50) (1, 5, 100)
 		for (int x = 0; x < s.length(); x++)
 		{
@@ -353,31 +358,35 @@ int main()
 		}
 		for (int i = 0; i < destVec.size(); i++) {
 			bfs(arr, bfsQueue, destVec[i].layerNum, destVec[i].xPos, destVec[i].yPos);
+			for (int j = 0; j < bfsQueue.size(); j++)
+			{
+				arr[bfsQueue[j].layerNum][bfsQueue[j].xPos][bfsQueue[j].yPos].bfsNum = 1;
+				arr[bfsQueue[j].layerNum][bfsQueue[j].xPos][bfsQueue[j].yPos].source = 1;
+				arr[bfsQueue[j].layerNum][bfsQueue[j].xPos][bfsQueue[j].yPos].destination = 0;
+				arr[bfsQueue[j].layerNum][bfsQueue[j].xPos][bfsQueue[j].yPos].obstacle = 1;
+				outCopy.push_back(bfsQueue[j]);
+			}
+			bfsQueue.clear();
+			bfsQueue.push_back(outCopy.back());
+			bfsQueue[0].bfsNum = 1;
 		}
-
-
+		//print outCopy into output file 
 	}
 
 	//test
 	//net1(1, 10, 20) (2, 30, 50) (1, 5, 100)
 	//net2(2, 100, 200) (1, 300, 50)
 	//net3(1, 100, 50) (2, 300, 150) (2, 50, 50) (1, 2, 2)
-	//cout << arr[1][10][20].source << " " << arr[2][30][50].destination << " " << arr[1][5][100].destination << endl;
-	//cout << arr[2][100][200].source << " " << arr[1][300][50].destination << " " << endl;
-	//cout << arr[1][100][50].source << " " << arr[2][300][150].destination
-	// << " " << arr[2][50][50].destination << " " << arr[1][2][2].destination << endl;
+	//net4 (1, 100, 50) (2, 50, 51) (2, 50, 50)
 
 	// deallocate memory
 	for (int i = 0; i < layer_count; i++)
 	{
 		for (int j = 0; j < width; j++)
 			delete[] arr[i][j];
-
 		delete[] arr[i];
 	}
-
 	delete[] arr;
-
 
 	system("pause");
 	return 0;
