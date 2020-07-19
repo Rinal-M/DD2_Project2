@@ -5,8 +5,8 @@
 #include<queue>
 #include<sstream>
 
-#define width 8
-#define height 8
+#define width 1000
+#define height 1000
 #define viaCost 10
 #define oppositePath 10
 
@@ -35,6 +35,12 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 			{
 				if (abs(z - destZ) % 2 == 1) // example 2 & 3
 				{
+					if (arr[z][x][y].via == 1 && arr[destZ][x][y].via == 1)
+					{
+						cout << "Cannot find a path for this net." << endl;
+						system("pause");
+						exit(0);
+					}
 					arr[z][x][y].via = 1;
 					arr[destZ][x][y].via = 1;
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
@@ -43,14 +49,26 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 				else if (destZ == z) // example 2 & 2
 				{
 					arr[z][x][y].via = 1;
-					if (z - 1 > 2 && arr[z - 1][x][y].obstacle == 0)
+					if (z - 1 > 1 && arr[z - 1][x][y].obstacle == 0)
 					{
+						if (arr[z][x][y].via == 1 && arr[z - 1][x][y].via == 1)
+						{
+							cout << "Cannot find a path for this net." << endl;
+							system("pause");
+							exit(0);
+						}
 						arr[z - 1][x][y].via = 1;
 						arr[z - 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 						bfsQueue.push_back(arr[z - 1][x][y]);
 					}
 					else
 					{
+						if (arr[z][x][y].via == 1 && arr[z + 1][x][y].via == 1)
+						{
+							cout << "Cannot find a path for this net." << endl;
+							system("pause");
+							exit(0);
+						}
 						arr[z + 1][x][y].via = 1;
 						arr[z + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 						bfsQueue.push_back(arr[z + 1][x][y]);
@@ -61,6 +79,12 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
 					arr[z][x][y].via = 1;
 					int m = min(destZ, z);
+					if (arr[z][x][y].via == 1 && arr[m + 1][x][y].via == 1)
+					{
+						cout << "Cannot find a path for this net." << endl;
+						system("pause");
+						exit(0);
+					}
 					if (arr[m + 1][x][y].obstacle == 0)
 					{
 						arr[m + 1][x][y].via = 1;
@@ -81,8 +105,15 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 			}
 			else //via
 			{
+				
 				if (abs(z - destZ) % 2 == 1) // example 2 & 3
 				{
+					if (arr[z][x][y].via == 1 && arr[destZ][x][y].via == 1)
+					{
+						cout << "Cannot find a path for this net." << endl;
+						system("pause");
+						exit(0);
+					}
 					arr[z][x][y].via = 1;
 					arr[destZ][x][y].via = 1;
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
@@ -90,15 +121,28 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 				}
 				else if (destZ == z) // example 2 & 2
 				{
+					
 					arr[z][x][y].via = 1;
-					if (z - 1 > 2 && arr[z - 1][x][y].obstacle == 0)
+					if (z - 1 > 1 && arr[z - 1][x][y].obstacle == 0)
 					{
+						if (arr[z][x][y].via == 1 && arr[z - 1][x][y].via == 1)
+						{
+							cout << "Cannot find a path for this net." << endl;
+							system("pause");
+							exit(0);
+						}
 						arr[z - 1][x][y].via = 1;
 						arr[z - 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 						bfsQueue.push_back(arr[z - 1][x][y]);
 					}
 					else
 					{
+						if (arr[z][x][y].via == 1 && arr[z + 1][x][y].via == 1)
+						{
+							cout << "Cannot find a path for this net." << endl;
+							system("pause");
+							exit(0);
+						}
 						arr[z + 1][x][y].via = 1;
 						arr[z + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 						bfsQueue.push_back(arr[z + 1][x][y]);
@@ -109,6 +153,12 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
 					arr[z][x][y].via = 1;
 					int m = min(destZ, z);
+					if (arr[z][x][y].via == 1 && arr[m + 1][x][y].via == 1)
+					{
+						cout << "Cannot find a path for this net." << endl;
+						system("pause");
+						exit(0);
+					}
 					if (arr[m + 1][x][y].obstacle == 0)
 					{
 						arr[m + 1][x][y].via = 1;
@@ -130,6 +180,12 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 			{
 				if (abs(z - destZ) % 2 == 1) // example 2 & 3
 				{
+					if (arr[z][x][y].via == 1 && arr[destZ][x][y].via == 1)
+					{
+						cout << "Cannot find a path for this net." << endl;
+						system("pause");
+						exit(0);
+					}
 					arr[z][x][y].via = 1;
 					arr[destZ][x][y].via = 1;
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
@@ -137,8 +193,14 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 				}
 				else if (destZ == z) // example 2 & 2
 				{
+					if (arr[z][x][y].via == 1 && arr[z - 1][x][y].via == 1)
+					{
+						cout << "Cannot find a path for this net." << endl;
+						system("pause");
+						exit(0);
+					}
 					arr[z][x][y].via = 1;
-					if (z - 1 > 2 && arr[z - 1][x][y].obstacle == 0)
+					if (z - 1 > 1 && arr[z - 1][x][y].obstacle == 0)
 					{
 						arr[z - 1][x][y].via = 1;
 						arr[z - 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
@@ -146,6 +208,12 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 					}
 					else
 					{
+						if (arr[z][x][y].via == 1 && arr[z + 1][x][y].via == 1)
+						{
+							cout << "Cannot find a path for this net." << endl;
+							system("pause");
+							exit(0);
+						}
 						arr[z + 1][x][y].via = 1;
 						arr[z + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 						bfsQueue.push_back(arr[z + 1][x][y]);
@@ -156,6 +224,12 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
 					arr[z][x][y].via = 1;
 					int m = min(destZ, z);
+					if (arr[z][x][y].via == 1 && arr[m + 1][x][y].via == 1)
+					{
+						cout << "Cannot find a path for this net." << endl;
+						system("pause");
+						exit(0);
+					}
 					if (arr[m + 1][x][y].obstacle == 0)
 					{
 						arr[m + 1][x][y].via = 1;
@@ -185,6 +259,12 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 			{
 				if (abs(z - destZ) % 2 == 1) // example 2 & 3
 				{
+					if (arr[z][x][y].via == 1 && arr[destZ][x][y].via == 1)
+					{
+						cout << "Cannot find a path for this net." << endl;
+						system("pause");
+						exit(0);
+					}
 					arr[z][x][y].via = 1;
 					arr[destZ][x][y].via = 1;
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
@@ -193,14 +273,26 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 				else if (destZ == z) // example 2 & 2
 				{
 					arr[z][x][y].via = 1;
-					if (z - 1 > 2 && arr[z - 1][x][y].obstacle == 0)
+					if (z - 1 > 1 && arr[z - 1][x][y].obstacle == 0)
 					{
+						if (arr[z][x][y].via == 1 && arr[z - 1][x][y].via == 1)
+						{
+							cout << "Cannot find a path for this net." << endl;
+							system("pause");
+							exit(0);
+						}
 						arr[z - 1][x][y].via = 1;
 						arr[z - 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 						bfsQueue.push_back(arr[z - 1][x][y]);
 					}
 					else
 					{
+						if (arr[z][x][y].via == 1 && arr[z + 1][x][y].via == 1)
+						{
+							cout << "Cannot find a path for this net." << endl;
+							system("pause");
+							exit(0);
+						}
 						arr[z + 1][x][y].via = 1;
 						arr[z + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 						bfsQueue.push_back(arr[z + 1][x][y]);
@@ -211,6 +303,12 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
 					arr[z][x][y].via = 1;
 					int m = min(destZ, z);
+					if (arr[z][x][y].via == 1 && arr[m + 1][x][y].via == 1)
+					{
+						cout << "Cannot find a path for this net." << endl;
+						system("pause");
+						exit(0);
+					}
 					if (arr[m + 1][x][y].obstacle == 0)
 					{
 						arr[m + 1][x][y].via = 1;
@@ -234,6 +332,12 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 			{
 				if (abs(z - destZ) % 2 == 1) // example 2 & 3
 				{
+					if (arr[z][x][y].via == 1 && arr[destZ][x][y].via == 1)
+					{
+						cout << "Cannot find a path for this net." << endl;
+						system("pause");
+						exit(0);
+					}
 					arr[z][x][y].via = 1;
 					arr[destZ][x][y].via = 1;
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
@@ -242,7 +346,7 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 				else if (destZ == z) // example 2 & 2
 				{
 					arr[z][x][y].via = 1;
-					if (z - 1 > 2 && arr[z - 1][x][y].obstacle == 0)
+					if (z - 1 > 1 && arr[z - 1][x][y].obstacle == 0)
 					{
 						arr[z - 1][x][y].via = 1;
 						arr[z - 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
@@ -250,6 +354,12 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 					}
 					else
 					{
+						if (arr[z][x][y].via == 1 && arr[z + 1][x][y].via == 1)
+						{
+							cout << "Cannot find a path for this net." << endl;
+							system("pause");
+							exit(0);
+						}
 						arr[z + 1][x][y].via = 1;
 						arr[z + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 						bfsQueue.push_back(arr[z + 1][x][y]);
@@ -260,6 +370,12 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
 					arr[z][x][y].via = 1;
 					int m = min(destZ, z);
+					if (arr[z][x][y].via == 1 && arr[m + 1][x][y].via == 1)
+					{
+						cout << "Cannot find a path for this net." << endl;
+						system("pause");
+						exit(0);
+					}
 					if (arr[m + 1][x][y].obstacle == 0)
 					{
 						arr[m + 1][x][y].via = 1;
@@ -277,6 +393,12 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 			{
 				if (abs(z - destZ) % 2 == 1) // example 2 & 3
 				{
+					if (arr[z][x][y].via == 1 && arr[destZ][x][y].via == 1)
+					{
+						cout << "Cannot find a path for this net." << endl;
+						system("pause");
+						exit(0);
+					}
 					arr[z][x][y].via = 1;
 					arr[destZ][x][y].via = 1;
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
@@ -285,14 +407,26 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 					else if (destZ == z) // example 2 & 2
 				{
 					arr[z][x][y].via = 1;
-					if (z - 1 > 2 && arr[z - 1][x][y].obstacle == 0)
+					if (z - 1 > 1 && arr[z - 1][x][y].obstacle == 0)
 					{
+						if (arr[z][x][y].via == 1 && arr[z - 1][x][y].via == 1)
+						{
+							cout << "Cannot find a path for this net." << endl;
+							system("pause");
+							exit(0);
+						}
 						arr[z - 1][x][y].via = 1;
 						arr[z - 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 						bfsQueue.push_back(arr[z - 1][x][y]);
 					}
 					else
 					{
+						if (arr[z][x][y].via == 1 && arr[z + 1][x][y].via == 1)
+						{
+							cout << "Cannot find a path for this net." << endl;
+							system("pause");
+							exit (0);
+						}
 						arr[z + 1][x][y].via = 1;
 						arr[z + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 						bfsQueue.push_back(arr[z + 1][x][y]);
@@ -303,6 +437,12 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
 					arr[z][x][y].via = 1;
 					int m = min(destZ, z);
+					if (arr[z][x][y].via == 1 && arr[m + 1][x][y].via == 1)
+					{
+						cout << "Cannot find a path for this net." << endl;
+						system("pause");
+						exit(0);
+					}
 					if (arr[m + 1][x][y].obstacle == 0)
 					{
 						arr[m + 1][x][y].via = 1;
@@ -333,10 +473,10 @@ void bfs(cell***& arr, vector<cell>& bfsQueue, int destZ, int destX, int destY)
 	cell destDelay = bfsQueue.back();
 	cout << "Delay = " << destDelay.bfsNum << endl;
 	cout << "Size of Queue " << bfsQueue.size() << endl;
-	for (int i = 0; i < bfsQueue.size(); i++)
-	{
-		cout << bfsQueue[i].layerNum << " " << bfsQueue[i].xPos << " " << bfsQueue[i].yPos << " " << bfsQueue[i].bfsNum << endl;
-	}
+	//for (int i = 0; i < bfsQueue.size(); i++)
+	//{
+	//	cout << bfsQueue[i].layerNum << " " << bfsQueue[i].xPos << " " << bfsQueue[i].yPos << " " << bfsQueue[i].bfsNum << endl;
+	//}
 
 }
 
@@ -430,6 +570,7 @@ int main()
 				arr[tempZ][tempX][tempY].bfsNum = 1;
 				arr[tempZ][tempX][tempY].visited = 1;
 				arr[tempZ][tempX][tempY].obstacle = 1;
+				arr[tempZ][tempX][tempY].via = 0;
 				bfsQueue.push_back(arr[tempZ][tempX][tempY]);
 				counter++;
 			}
@@ -478,12 +619,6 @@ int main()
 		netCount++;
 	}
 
-	//test
-	//net1(1, 10, 20) (2, 30, 50) (1, 5, 100)
-	//net2(2, 100, 200) (1, 300, 50)
-	//net3(1, 100, 50) (2, 300, 150) (2, 50, 50) (1, 2, 2)
-	//net4 (1, 100, 50) (2, 50, 51) (2, 50, 50)
-
 	infile.close();
 	outfile.close();
 
@@ -499,3 +634,13 @@ int main()
 	system("pause");
 	return 0;
 }
+
+//test
+//net1(1, 10, 20) (2, 30, 50) (1, 5, 100)
+//net2(2, 100, 200) (1, 300, 50)
+//net3(1, 100, 50) (2, 300, 150) (2, 50, 50) (1, 2, 2)
+
+//test2
+//net1(1, 0, 0) (3, 7, 7) (3, 1, 1) (3, 1, 3)
+//net2(2, 3, 2) (2, 6, 5)
+//net3(2, 1, 1) (1, 5, 0) (3, 4, 3)
