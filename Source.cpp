@@ -40,6 +40,22 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 					bfsQueue.push_back(arr[destZ][x][y]);
 				}
+				else if (destZ == z) // example 2 & 2
+				{
+					arr[z][x][y].via = 1;
+					if (z - 1 > 2 && arr[z - 1][x][y].obstacle == 0)
+					{
+						arr[z - 1][x][y].via = 1;
+						arr[z - 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[z - 1][x][y]);
+					}
+					else
+					{
+						arr[z + 1][x][y].via = 1;
+						arr[z + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[z + 1][x][y]);
+					}
+				}
 				else if(abs(z - destZ) % 2 == 0) // example 2 & 4
 				{
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
@@ -72,6 +88,22 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 					bfsQueue.push_back(arr[destZ][x][y]);
 				}
+				else if (destZ == z) // example 2 & 2
+				{
+					arr[z][x][y].via = 1;
+					if (z - 1 > 2 && arr[z - 1][x][y].obstacle == 0)
+					{
+						arr[z - 1][x][y].via = 1;
+						arr[z - 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[z - 1][x][y]);
+					}
+					else
+					{
+						arr[z + 1][x][y].via = 1;
+						arr[z + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[z + 1][x][y]);
+					}
+				}
 				else if (abs(z - destZ) % 2 == 0)// example 2 & 4
 				{
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
@@ -102,6 +134,22 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 					arr[destZ][x][y].via = 1;
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 					bfsQueue.push_back(arr[destZ][x][y]);
+				}
+				else if (destZ == z) // example 2 & 2
+				{
+					arr[z][x][y].via = 1;
+					if (z - 1 > 2 && arr[z - 1][x][y].obstacle == 0)
+					{
+						arr[z - 1][x][y].via = 1;
+						arr[z - 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[z - 1][x][y]);
+					}
+					else
+					{
+						arr[z + 1][x][y].via = 1;
+						arr[z + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[z + 1][x][y]);
+					}
 				}
 				else if (abs(z - destZ) % 2 == 0)// example 2 & 4
 				{
@@ -142,6 +190,22 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 					bfsQueue.push_back(arr[destZ][x][y]);
 				}
+				else if (destZ == z) // example 2 & 2
+				{
+					arr[z][x][y].via = 1;
+					if (z - 1 > 2 && arr[z - 1][x][y].obstacle == 0)
+					{
+						arr[z - 1][x][y].via = 1;
+						arr[z - 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[z - 1][x][y]);
+					}
+					else
+					{
+						arr[z + 1][x][y].via = 1;
+						arr[z + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[z + 1][x][y]);
+					}
+				}
 				else if (abs(z - destZ) % 2 == 0)// example 2 & 4
 				{
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
@@ -175,6 +239,22 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 					bfsQueue.push_back(arr[destZ][x][y]);
 				}
+				else if (destZ == z) // example 2 & 2
+				{
+					arr[z][x][y].via = 1;
+					if (z - 1 > 2 && arr[z - 1][x][y].obstacle == 0)
+					{
+						arr[z - 1][x][y].via = 1;
+						arr[z - 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[z - 1][x][y]);
+					}
+					else
+					{
+						arr[z + 1][x][y].via = 1;
+						arr[z + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[z + 1][x][y]);
+					}
+				}
 				else if (abs(z - destZ) % 2 == 0)// example 2 & 4
 				{
 					// destz w el z el na5d el max w n minus 1 and hn check for obstacle w n7tlo via w n push it  
@@ -201,6 +281,22 @@ bool calculate(cell***& arr, vector<cell>& bfsQueue, int num, int destZ, int des
 					arr[destZ][x][y].via = 1;
 					arr[destZ][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
 					bfsQueue.push_back(arr[destZ][x][y]);
+				}
+					else if (destZ == z) // example 2 & 2
+				{
+					arr[z][x][y].via = 1;
+					if (z - 1 > 2 && arr[z - 1][x][y].obstacle == 0)
+					{
+						arr[z - 1][x][y].via = 1;
+						arr[z - 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[z - 1][x][y]);
+					}
+					else
+					{
+						arr[z + 1][x][y].via = 1;
+						arr[z + 1][x][y].bfsNum = arr[z][x][y].bfsNum + viaCost;
+						bfsQueue.push_back(arr[z + 1][x][y]);
+					}
 				}
 				else if (abs(z - destZ) % 2 == 0)// example 2 & 4
 				{
@@ -269,6 +365,8 @@ int main()
 	string subString;
 	ifstream infile;
 	infile.open("file.txt");
+	ofstream outfile;
+	outfile.open("out.txt");
 	int layer_count;
 	string s;
 	vector<cell> bfsQueue, destVec, outCopy;
@@ -299,6 +397,7 @@ int main()
 				arr[i][j][k].source = 0;
 				arr[i][j][k].destination = 0;
 			}
+
 	int temp, temp2;
 	int tempX, tempY, tempZ;
 	vector<int>tempVect;
@@ -371,6 +470,12 @@ int main()
 			bfsQueue[0].bfsNum = 1;
 		}
 		//print outCopy into output file 
+		outfile << "net" << netCount;
+		for (int i = 0; i < outCopy.size(); i++) {
+			outfile << " (" << outCopy[i].layerNum << ", " << outCopy[i].xPos << ", " << outCopy[i].yPos << ")";
+		}
+		outfile << endl;
+		netCount++;
 	}
 
 	//test
@@ -378,6 +483,9 @@ int main()
 	//net2(2, 100, 200) (1, 300, 50)
 	//net3(1, 100, 50) (2, 300, 150) (2, 50, 50) (1, 2, 2)
 	//net4 (1, 100, 50) (2, 50, 51) (2, 50, 50)
+
+	infile.close();
+	outfile.close();
 
 	// deallocate memory
 	for (int i = 0; i < layer_count; i++)
