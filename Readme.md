@@ -1,7 +1,7 @@
 # Readme file
 
-## Assumptions\
-There no more than 6 metal layers
+## Assumptions
+There no more than 6 metal layers\
 No routing between more than 2 metal layers for example layer 1 and layer 4\
 ## How to use
 Just download the main file of the code\
