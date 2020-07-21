@@ -10,7 +10,7 @@ Change the name of the input file in the source code
 Run the program and get the output file
 The program will output the delay in the console and the output file will have the detailed routes of the pins
 Choose the file that has the map obstacle 
-Open the python script and change the file name
+The layers are printed for visualization
 visualize the grids of each nets
 	
 
