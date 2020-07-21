@@ -5,15 +5,15 @@
 #include<queue>
 #include<sstream>
 
-#define width 1000
-#define height 1000
+#define width 31
+#define height 31
 #define viaCost 10
 #define oppositePath 10
 
 using namespace std;
 
 struct cell {
-	int xPos, yPos, layerNum, bfsNum;
+	int xPos, yPos, layerNum, bfsNum, netlist;
 	bool visited, obstacle, via, source, destination;
 };
 
@@ -501,7 +501,7 @@ vector<int> parser(string str, cell*** arr)
 
 int main()
 {
-	int counter = 0, netCount = 1;
+	int counter = 0, netCount = 1 , counterloop = 1;
 	string subString;
 	ifstream infile;
 	infile.open("file.txt");
@@ -614,11 +614,27 @@ int main()
 		outfile << "net" << netCount;
 		for (int i = 0; i < outCopy.size(); i++) {
 			outfile << " (" << outCopy[i].layerNum << ", " << outCopy[i].xPos << ", " << outCopy[i].yPos << ")";
+			arr[outCopy[i].layerNum][outCopy[i].xPos][outCopy[i].yPos].netlist = netCount;
 		}
 		outfile << endl;
+		for (int z = 1; z < layer_count - 1; z++)
+		{
+			cout << "Layer " << counterloop << ":" << endl;
+			for (int i = 0; i < width; i++) {
+				for (int j = 0; j < width; j++)
+				{
+					if (arr[z][i][j].obstacle == 1)
+						cout << arr[z][i][j].netlist << " ";
+					else
+						cout << 0 << " ";
+				}
+				cout << endl;
+			}
+			counterloop++;
+		}
 		netCount++;
 	}
-
+	cout << endl;
 	infile.close();
 	outfile.close();
 
@@ -634,43 +650,3 @@ int main()
 	system("pause");
 	return 0;
 }
-
-//test
-//net1(1, 10, 20) (2, 30, 50) (1, 5, 100)
-//net2(2, 100, 200) (1, 300, 50)
-//net3(1, 100, 50) (2, 300, 150) (1, 2, 2)
-
-//test2
-//net1(1, 0, 0) (3, 7, 7) (3, 1, 1) (3, 1, 3)
-//net2(2, 3, 2) (2, 6, 5)
-//net3(1, 5, 0) (3, 4, 3)
-
-//test 3
-//net1(1, 0, 0) (1, 999, 999) (1, 0, 999)
-//net2(2, 55, 333) (1, 789, 432)
-//net3(2, 98, 35) (1, 543,86) 
-
-//test 4
-//net1(2, 76, 35) (2, 53, 26)
-//net2(1, 5, 3) (1, 735, 12)
-//net3(2, 3, 1) (2, 511, 490)
-//net4(1, 100, 100)(2, 300, 300)
-
-//test 5
-//net1(1, 1, 1) (2, 2, 2)
-//net2(1, 11, 11)(2, 22, 22)
-//net3(1, 111, 111)(2, 222, 222)
-
-//test 6
-//net1(3, 265, 235) (1, 234, 123)
-//net2(2, 274, 659) (2, 842, 437)
-//net3(2, 15, 26) (3, 76, 87) 
-
-//test 7
-//net1(1, 2, 3) (2, 200, 300)
-//net2(2, 4, 5) (1, 400, 500)
-
-//test 8
-//net1(1, 1, 1) (2, 2, 2) (3, 3, 3)
-//net2(1, 4, 4) (2, 5, 5) (1, 6, 6)
-//net3(2, 7, 7) (1, 8, 8) (2, 9, 9)
