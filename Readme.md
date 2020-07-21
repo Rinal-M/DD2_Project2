@@ -1,9 +1,9 @@
 # Readme file
 
 ## Assumptions\
-There no more than 6 metal layers\
+There no more than 6 metal layers
 No routing between more than 2 metal layers for example layer 1 and layer 4\
-## How to use\
+## How to use
 Just download the main file of the code\
 Write the nets you want to route in the file you will input to the code\
 Change the name of the input file in the source code\
